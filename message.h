@@ -14,6 +14,7 @@ class Message{
 		Type getType() const;
 		virtual Message *clone() const=0; //Metodo virtual para que cada hijo lo implemente y que se clone correctamente
 		Message(Message::Type);
+		virtual ~Message();
 	private: 
 		Type type;
 	};
@@ -26,6 +27,7 @@ class ConnectMsg: public Message{
 		ConnectMsg(string u="", string p="");
 		string getUsername() const;
 		string getPassword() const;
+		~ConnectMsg();
 	};
 
 class ConnAckMsg: public Message{
@@ -34,6 +36,7 @@ class ConnAckMsg: public Message{
 	ConnAckMsg::Status getStatus() const;
 	ConnAckMsg(Status S=ConnAckMsg::Status::CONNECTION_OK);
 	ConnAckMsg * clone() const;
+	~ConnAckMsg();
 	private:
 	Status status;
 	};
@@ -45,31 +48,35 @@ class PublishMsg: public Message {
 	TopicValue getValue() const;
 	bool getRetain() const;
 	PublishMsg * clone() const;
+	~PublishMsg();
 	private:
 	TopicName topic;
 	TopicValue value;
 	bool retain;
-};	
+};	 
 
 class SuscribeMsg: public Message{
 	public:
 	SuscribeMsg(TopicName N="");
 	SuscribeMsg * clone() const;
 	TopicName getTopic() const;
+	~SuscribeMsg();
 	private:
 	TopicName topic;
 	};
 class UnsuscribeMsg: public Message{
 	TopicName topic;
 	public:
-		UnsuscribeMsg();
+		UnsuscribeMsg(TopicName N="");
 		TopicName getTopic() const;
 		UnsuscribeMsg * clone() const;
+		~UnsuscribeMsg();
 	};
 class DisconnectMsg: public Message{
 	public:
 		DisconnectMsg();
 		DisconnectMsg * clone() const;
+		~DisconnectMsg();
 	};
 
 template <typename Enumeration>

@@ -9,5 +9,6 @@ class ClientOpsIF{
 class BrokerOpsIF{
 	public:
 		virtual void sendMsg (const Message &)=0;
+		virtual ~BrokerOpsIF(){};
 	};
 #endif

@@ -1,7 +1,6 @@
 #ifndef CLIENT
 #define CLIENT
 #include "interface.h"
-#include <thread>
 #include <set>
 #include "queue_thread.cpp"
 
@@ -44,11 +43,14 @@ class Client:public BrokerOpsIF{
 		//A los container estos solo se añaden nuevos elementos y se borran.
 		Queue <Message *> recvQueue; // OJO: Esta cola debe ser thread safe 
 		void thread_handler();
+		void deleteSubsTopics(); //Esta funcion borra subscriptions y topics de los sets propios y del broker
 	public:
 		Client(ClientOpsIF * _cif=nullptr,size_t _N=4);
 		~Client();
 		void sendPublish2Client(const PublishMsg &m); //Esto usa el lock y se asegura de enviar un unico publish a la vez
 		void sendMsg(const Message &m);
+		Client & operator =(const Client &)=delete;
+		Client (const Client &)=delete;	
 	};
 	
 #endif

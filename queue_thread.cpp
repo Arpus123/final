@@ -21,6 +21,8 @@ class Queue{
 		void get (T *);
 		Queue(size_t _N=4):N{_N},array{new T[N]}{};
 		~Queue(){delete [] array;};
+		Queue & operator =(const Queue &)=delete;
+		Queue (const Queue &)=delete;
 
 	};
 
